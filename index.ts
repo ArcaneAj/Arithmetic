@@ -19,6 +19,11 @@ namespace Root {
             this.a = randomIntFromInterval(1, 12);
             this.b = randomIntFromInterval(1, 12);
             this.operation = randomIntFromInterval(1, 3);
+            if (this.operation === 2 && this.a < this.b) {
+                const temp = this.a;
+                this.a = this.b;
+                this.b - temp;
+            }
         }
 
         result(): number {
