@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    color: #e3e2e8;
+    background-color: #121318; /* Infinite hot black body colour */
+}
+
+button {
+    color: #274587;
+    background: #9ab5ff;
+    padding: 5px;
+    margin: 0px;
+    border: none;
+    /* border-radius: 9999px; /* always rounded */
+    border-radius: 5px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:active {
+    opacity: 0.7;
+}
+
+/*
+
+Background: #121318
+Background Bright: #38393e
+
+Text: #e3e2e8;
+
+Primary: #9ab5ff
+Primary Accent: #274587
+
+Secondary: #3f4863
+Secondary Accent: #aeb8d8
+
+Tertiary: #e4a0e3
+Tertiary Accent: #6a326d
+
+Error: #93000a
+Error Accent: #ffdad6
+
+*/

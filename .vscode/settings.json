@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/node_modules/**": true
+    },
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "cmd": "cd f:/Arithmetic && npm run build"
+            }
+        ]
+    }
+}

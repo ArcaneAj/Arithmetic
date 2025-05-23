@@ -1,0 +1,15 @@
+{
+  "name": "arithmetic",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "powershell.exe -File devPreBuild.ps1 -source / -output /dist && powershell.exe -File build.ps1 -source / -output /dist && powershell.exe -File devPostBuild.ps1 -source / -output /dist",
+    "serve": "http-server ./dist"
+  },
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "rollup": "^4.35.0",
+    "typescript": "~5.7.2"
+  }
+}
