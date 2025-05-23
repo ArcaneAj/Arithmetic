@@ -50,7 +50,7 @@ namespace Root {
     }
 
     function generateProblems(n: number) {
-        const problems = Array.from({ length: 5 }, (_, i) => new Problem());
+        const problems = Array.from({ length: n }, (_, i) => new Problem());
         console.log(problems.map((x) => x.format()));
         console.log(problems.map((x) => x.result()));
     }
