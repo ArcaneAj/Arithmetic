@@ -5,6 +5,10 @@ html, body {
     margin: 0px;
     color: #e3e2e8;
     background-color: #121318; /* Infinite hot black body colour */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 button {
@@ -13,7 +17,6 @@ button {
     padding: 5px;
     margin: 0px;
     border: none;
-    /* border-radius: 9999px; /* always rounded */
     border-radius: 5px;
 }
 
@@ -23,6 +26,54 @@ button:hover {
 
 button:active {
     opacity: 0.7;
+}
+
+.grid {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    align-content: center;
+    /* background-color: red; */
+}
+
+.item {
+    /* background-color: green; */
+    width: 23vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 0.45vh;
+    margin-bottom: 0.45vh;
+    height: 2.7vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.question {
+    margin-left: 2%;
+    width: 30%;
+}
+
+.answer {
+    width: 20%;
+}
+
+.input {
+    width: 40%;
+    border: none;
+    border-radius: 3px;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /*
