@@ -113,6 +113,9 @@ namespace Root {
         for (const problem of problems) {
             grid.appendChild(problem.generateHTML());
         }
+
+        const scoreElem = document.getElementById('score') as HTMLDivElement;
+        scoreElem.innerText = `0/100`;
     }
 
     function randomIntFromInterval(min: number, max: number) {
