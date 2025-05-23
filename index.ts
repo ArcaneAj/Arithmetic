@@ -1,3 +1,4 @@
+declare const confetti: any;
 namespace Root {
     document
         .getElementById('createButton')!
@@ -75,19 +76,18 @@ namespace Root {
             input.addEventListener('blur', () => {
                 const ans = input.value;
 
+                const scoreElem = document.getElementById(
+                    'score'
+                ) as HTMLDivElement;
+                const newScore =
+                    parseInt(scoreElem.innerText.split('/')[0]) + 1;
                 if (ans === this.resultString()) {
                     input.style.backgroundColor = 'green';
                     answer.innerText = '✓';
                     answer.style.visibility = 'visible';
                     answer.style.color = 'green';
                     input.disabled = true;
-                    const scoreElem = document.getElementById(
-                        'score'
-                    ) as HTMLDivElement;
-                    const oldScore = parseInt(
-                        scoreElem.innerText.split('/')[0]
-                    );
-                    scoreElem.innerText = `${oldScore + 1}/100`;
+                    scoreElem.innerText = `${newScore}/100`;
                 }
                 if (ans !== this.resultString() && ans !== '') {
                     input.style.backgroundColor = 'red';
@@ -95,6 +95,11 @@ namespace Root {
                     answer.style.visibility = 'visible';
                     answer.style.color = 'red';
                     input.disabled = true;
+                }
+
+                if (newScore === 100) {
+                    fireworks(10);
+                    fountain(10);
                 }
             });
 
@@ -122,4 +127,63 @@ namespace Root {
         // min and max included
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
+}
+
+function fireworks(seconds: number) {
+    var duration = seconds * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+        // since particles fall down, start a bit higher than random
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        });
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        });
+    }, 250);
+}
+
+function fountain(seconds: number) {
+    var end = Date.now() + seconds * 1000;
+
+    // go Buckeyes!
+    var colors = ['#bb0000', '#ffffff'];
+
+    (function frame() {
+        confetti({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: colors,
+        });
+        confetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: colors,
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
 }
