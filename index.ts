@@ -1,7 +1,7 @@
 namespace Root {
     document
         .getElementById('createButton')!
-        .addEventListener('click', () => generateProblems(5), false);
+        .addEventListener('click', () => generateProblems(100), false);
 
     enum Operation {
         Add = 1,
