@@ -143,6 +143,9 @@ namespace Root {
                 grid.appendChild(problem.generateHTML());
             }
         } else {
+            const html = document.getElementsByTagName('html').item(0)!;
+            html.style.justifyContent = 'start';
+            body.style.height = '100vw';
             let score = document.getElementById('score') as HTMLDivElement;
             if (score == null) {
                 score = document.createElement('div');
@@ -157,12 +160,19 @@ namespace Root {
             if (problemWrapper == null) {
                 problemWrapper = document.createElement('div');
                 problemWrapper.id = 'problemWrapper';
+                problemWrapper.style.width = '100%';
+                problemWrapper.style.display = 'flex';
+                problemWrapper.style.flexDirection = 'row';
+                problemWrapper.style.justifyContent = 'center';
+                problemWrapper.style.alignItems = 'center';
                 body.appendChild(problemWrapper);
             }
 
             problemWrapper.replaceChildren();
             const problem = new Problem();
-            problemWrapper.appendChild(problem.generateHTML());
+            const problemHtml = problem.generateHTML();
+            problemHtml.style.width = '80%';
+            problemWrapper.appendChild(problemHtml);
 
             let button = document.getElementById(
                 'nextButton'
@@ -174,7 +184,10 @@ namespace Root {
                 button.innerText = 'Next';
                 button.addEventListener(
                     'click',
-                    () => generateProblems(1),
+                    async () => {
+                        await new Promise((f) => setTimeout(f, 1000));
+                        generateProblems(1);
+                    },
                     false
                 );
                 body.appendChild(button);
