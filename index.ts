@@ -95,14 +95,6 @@ namespace Root {
                     input.disabled = true;
                 }
 
-                let button = document.getElementById(
-                    'nextButton'
-                ) as HTMLButtonElement;
-
-                if (button != null) {
-                    button.click();
-                }
-
                 if (newScore === 100) {
                     fireworks(10);
                     fountain(10);
