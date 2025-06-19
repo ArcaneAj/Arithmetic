@@ -115,6 +115,14 @@ namespace Root {
                 this.input.focus();
             }
         }
+
+        currentAnswer(): string {
+            if (this.input != null) {
+                return this.input.value;
+            }
+
+            return '';
+        }
     }
 
     function generateProblems(n: number) {
@@ -196,8 +204,10 @@ namespace Root {
                 button.addEventListener(
                     'click',
                     async () => {
-                        await new Promise((f) => setTimeout(f, 1000));
-                        generateProblems(1);
+                        if (problem.currentAnswer() !== '') {
+                            await new Promise((f) => setTimeout(f, 1000));
+                            generateProblems(1);
+                        }
                     },
                     false
                 );
