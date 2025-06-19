@@ -5,7 +5,7 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "cmd": "cd f:/Arithmetic && npm run build"
+                "cmd": "cd g:/code/Arithmetic && npm run build"
             }
         ]
     }

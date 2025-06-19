@@ -1,8 +1,5 @@
 declare const confetti: any;
 namespace Root {
-    document
-        .getElementById('createButton')!
-        .addEventListener('click', () => generateProblems(100), false);
     document.addEventListener('DOMContentLoaded', () => generateProblems(100));
 
     enum Operation {
@@ -112,15 +109,47 @@ namespace Root {
     }
 
     function generateProblems(n: number) {
-        const problems = Array.from({ length: n }, (_, i) => new Problem());
-        const grid = document.getElementById('grid') as HTMLDivElement;
-        grid.replaceChildren();
-        for (const problem of problems) {
-            grid.appendChild(problem.generateHTML());
-        }
+        const body = document.getElementsByTagName('body').item(0)!;
+        body.replaceChildren();
+        if (window.innerHeight / window.innerWidth < 1) {
+            const header = document.createElement('div');
+            header.classList = 'header';
+            body.appendChild(header);
 
-        const scoreElem = document.getElementById('score') as HTMLDivElement;
-        scoreElem.innerText = `0/100`;
+            const grid = document.createElement('div');
+            grid.id = 'grid';
+            grid.classList = 'grid';
+            body.appendChild(grid);
+
+            const button = document.createElement('button');
+            button.name = 'createButton';
+            button.id = 'createButton';
+            button.innerText = 'Regenerate';
+            button.addEventListener(
+                'click',
+                () => generateProblems(100),
+                false
+            );
+            header.appendChild(button);
+
+            const score = document.createElement('div');
+            score.id = 'score';
+            score.innerText = '0/100';
+            header.appendChild(score);
+
+            const problems = Array.from({ length: n }, (_, i) => new Problem());
+            grid.replaceChildren();
+            for (const problem of problems) {
+                grid.appendChild(problem.generateHTML());
+            }
+
+            const scoreElem = document.getElementById(
+                'score'
+            ) as HTMLDivElement;
+            scoreElem.innerText = `0/100`;
+        } else {
+            // Mobile 1 question at a time
+        }
     }
 
     function randomIntFromInterval(min: number, max: number) {
