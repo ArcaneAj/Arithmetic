@@ -13,6 +13,7 @@ namespace Root {
         b: number;
         operation: number;
         input: HTMLInputElement | undefined;
+        public onNext: () => void;
 
         constructor() {
             this.a = randomIntFromInterval(1, 12);
@@ -23,6 +24,7 @@ namespace Root {
                 this.a = this.b;
                 this.b - temp;
             }
+            this.onNext = () => {};
         }
 
         result(): number {
@@ -79,6 +81,7 @@ namespace Root {
                 ) as HTMLDivElement;
                 const newScore =
                     parseInt(scoreElem.innerText.split('/')[0]) + 1;
+                let correct = false;
                 if (ans === this.resultString()) {
                     input.style.backgroundColor = 'green';
                     answer.innerText = '✓';
@@ -86,6 +89,7 @@ namespace Root {
                     answer.style.color = 'green';
                     input.disabled = true;
                     scoreElem.innerText = `${newScore}/100`;
+                    correct = true;
                 }
                 if (ans !== this.resultString() && ans !== '') {
                     input.style.backgroundColor = 'red';
@@ -95,9 +99,24 @@ namespace Root {
                     input.disabled = true;
                 }
 
+                const log = Math.log2(newScore);
+                console.log(log);
+                console.log(Math.floor(log));
+                if (correct && log === Math.floor(log)) {
+                    fireworks(1);
+                    stars(1);
+                }
+
                 if (newScore === 100) {
                     fireworks(10);
                     fountain(10);
+                }
+            });
+
+            input.addEventListener('keypress', (event: KeyboardEvent) => {
+                if (event.key === 'Enter') {
+                    input.blur();
+                    this.onNext();
                 }
             });
 
@@ -191,6 +210,15 @@ namespace Root {
             problemHtml.style.width = '80%';
             problemWrapper.appendChild(problemHtml);
 
+            const onNext = async () => {
+                if (problem.currentAnswer() !== '') {
+                    await new Promise((f) => setTimeout(f, 1000));
+                    generateProblems(1);
+                }
+            };
+
+            problem.onNext = onNext;
+
             let button = document.getElementById(
                 'nextButton'
             ) as HTMLButtonElement;
@@ -201,16 +229,7 @@ namespace Root {
                 button.innerText = 'Next';
                 button.style.height = '10%';
                 button.style.width = '30%';
-                button.addEventListener(
-                    'click',
-                    async () => {
-                        if (problem.currentAnswer() !== '') {
-                            await new Promise((f) => setTimeout(f, 1000));
-                            generateProblems(1);
-                        }
-                    },
-                    false
-                );
+                button.addEventListener('click', onNext, false);
                 body.appendChild(button);
             }
 
@@ -258,8 +277,8 @@ function fireworks(seconds: number) {
 function fountain(seconds: number) {
     var end = Date.now() + seconds * 1000;
 
-    // go Buckeyes!
-    var colors = ['#bb0000', '#ffffff'];
+    // rainbow
+    var colors = ['#f00', '#0f0', '#00f', '#ff0', '#0ff', '#f0f'];
 
     (function frame() {
         confetti({
@@ -281,4 +300,40 @@ function fountain(seconds: number) {
             requestAnimationFrame(frame);
         }
     })();
+}
+
+function stars(seconds: number): void {
+    var defaults = {
+        spread: 360,
+        ticks: 50,
+        gravity: 0,
+        decay: 0.94,
+        startVelocity: 30,
+        colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
+    };
+
+    var duration = seconds * 1000;
+    var animationEnd = Date.now() + duration;
+
+    var interval = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        confetti({
+            ...defaults,
+            particleCount: 40,
+            scalar: 1.2,
+            shapes: ['star'],
+        });
+
+        confetti({
+            ...defaults,
+            particleCount: 10,
+            scalar: 0.75,
+            shapes: ['circle'],
+        });
+    }, 250);
 }
