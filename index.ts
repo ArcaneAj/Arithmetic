@@ -110,8 +110,8 @@ namespace Root {
 
     function generateProblems(n: number) {
         const body = document.getElementsByTagName('body').item(0)!;
-        body.replaceChildren();
         if (window.innerHeight / window.innerWidth < 1) {
+            body.replaceChildren();
             const header = document.createElement('div');
             header.classList = 'header';
             body.appendChild(header);
@@ -142,13 +142,43 @@ namespace Root {
             for (const problem of problems) {
                 grid.appendChild(problem.generateHTML());
             }
-
-            const scoreElem = document.getElementById(
-                'score'
-            ) as HTMLDivElement;
-            scoreElem.innerText = `0/100`;
         } else {
-            // Mobile 1 question at a time
+            let score = document.getElementById('score') as HTMLDivElement;
+            if (score == null) {
+                score = document.createElement('div');
+                score.id = 'score';
+                score.innerText = '0/100';
+                body.appendChild(score);
+            }
+
+            let problemWrapper = document.getElementById(
+                'problemWrapper'
+            ) as HTMLDivElement;
+            if (problemWrapper == null) {
+                problemWrapper = document.createElement('div');
+                problemWrapper.id = 'problemWrapper';
+                body.appendChild(problemWrapper);
+            }
+
+            problemWrapper.replaceChildren();
+            const problem = new Problem();
+            problemWrapper.appendChild(problem.generateHTML());
+
+            let button = document.getElementById(
+                'nextButton'
+            ) as HTMLButtonElement;
+            if (button == null) {
+                button = document.createElement('button');
+                button.name = 'nextButton';
+                button.id = 'nextButton';
+                button.innerText = 'Next';
+                button.addEventListener(
+                    'click',
+                    () => generateProblems(1),
+                    false
+                );
+                body.appendChild(button);
+            }
         }
     }
 
