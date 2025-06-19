@@ -12,6 +12,7 @@ namespace Root {
         a: number;
         b: number;
         operation: number;
+        input: HTMLInputElement | undefined;
 
         constructor() {
             this.a = randomIntFromInterval(1, 12);
@@ -104,7 +105,15 @@ namespace Root {
             root.appendChild(input);
             root.appendChild(answer);
 
+            this.input = input;
+
             return root;
+        }
+
+        focus() {
+            if (this.input != null) {
+                this.input.focus();
+            }
         }
     }
 
@@ -192,6 +201,8 @@ namespace Root {
                 );
                 body.appendChild(button);
             }
+
+            problem.focus();
         }
     }
 
