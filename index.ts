@@ -95,6 +95,14 @@ namespace Root {
                     input.disabled = true;
                 }
 
+                let button = document.getElementById(
+                    'nextButton'
+                ) as HTMLButtonElement;
+
+                if (button != null) {
+                    button.click();
+                }
+
                 if (newScore === 100) {
                     fireworks(10);
                     fountain(10);
@@ -191,6 +199,8 @@ namespace Root {
                 button.name = 'nextButton';
                 button.id = 'nextButton';
                 button.innerText = 'Next';
+                button.style.height = '10%';
+                button.style.width = '30%';
                 button.addEventListener(
                     'click',
                     async () => {
